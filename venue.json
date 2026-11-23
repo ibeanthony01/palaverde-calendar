@@ -1,0 +1,59 @@
+{
+  "venue": {
+    "name": "Palaverde",
+    "alternateName": "PalaVerde",
+    "city": "Villorba",
+    "region": "Veneto",
+    "province": "Treviso",
+    "postalCode": "31020",
+    "country": "IT",
+    "address": "Via Guglielmo Marconi 10",
+    "latitude": 45.72421,
+    "longitude": 12.26254,
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=45.72421,12.26254",
+    "description": {
+      "it": "Calendario aggiornato degli eventi al Palaverde di Villorba: partite di basket e volley, concerti e informazioni utili per organizzare la visita.",
+      "en": "An up-to-date event calendar for Palaverde in Villorba: basketball, volleyball, concerts, and useful information for planning your visit."
+    },
+    "canonicalUrl": "https://YOUR-DOMAIN.example",
+    "timezone": "Europe/Rome"
+  },
+  "data": {
+    "eventsUrl": "./events.json",
+    "sources": [
+      "https://www.trevisobasket.it/",
+      "https://imocovolley.it/",
+      "https://www.ticketone.it/",
+      "https://www.vivaticket.com/"
+    ],
+    "refreshNote": "The weekly GitHub Action publishes events.json and events.ics from source pages configured in scripts/scrape_events.py. Review source selectors and terms before enabling."
+  },
+  "affiliates": {
+    "tickets": {
+      "label": "Acquista Biglietti",
+      "urlTemplate": "",
+      "fallbackUrl": "https://www.google.com/search?q=Palaverde+biglietti"
+    },
+    "hotels": {
+      "label": "Hotel vicino all'arena",
+      "urlTemplate": "",
+      "fallbackUrl": "https://www.booking.com/searchresults.it.html?ss=Palaverde%2C%20Villorba"
+    }
+  },
+  "sponsor": {
+    "title": "Partner Locale",
+    "description": "Promuovi la tua attività a chi partecipa agli eventi del Palaverde.",
+    "cta": "Prenota questo spazio",
+    "url": "https://buy.stripe.com/REPLACE_WITH_YOUR_PAYMENT_LINK",
+    "note": "Replace with a Stripe Payment Link or self-serve sponsor form URL before launch."
+  },
+  "ads": {
+    "enabled": false,
+    "publisherId": "",
+    "slots": ["top", "between-events", "footer"]
+  },
+  "seo": {
+    "keywords": ["Palaverde eventi", "eventi Villorba", "basket Treviso", "volley Conegliano", "concerti Treviso"],
+    "defaultImage": ""
+  }
+}

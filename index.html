@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#12372d">
+  <title>Eventi al Palaverde | Calendario Basket, Volley e Concerti</title>
+  <meta name="description" content="Calendario eventi Palaverde a Villorba: partite, concerti, biglietti e hotel vicino all'arena.">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://YOUR-DOMAIN.example/">
+  <link rel="preconnect" href="https://cdn.tailwindcss.com">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :focus-visible{outline:3px solid #eabf72;outline-offset:3px} .ad-placeholder{min-height:90px}
+    /* Remove this class from the marked sections when ads or sponsorships are ready. */
+    .launch-hidden{display:none!important}
+    dialog::backdrop{background:rgb(12 25 20 / 62%);backdrop-filter:blur(3px)}
+    dialog[open]{animation:modal-in .18s ease-out}
+    @keyframes modal-in{from{opacity:0;transform:translateY(8px) scale(.99)}to{opacity:1;transform:translateY(0) scale(1)}}
+    @media(prefers-reduced-motion:reduce){dialog[open]{animation:none}}
+  </style>
+</head>
+<body class="min-h-screen bg-stone-50 text-stone-900 antialiased">
+  <header class="bg-[#12372d] text-white">
+    <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
+      <a href="#main" class="text-lg font-black tracking-tight">PALAVERDE<span class="text-amber-300">.EVENTI</span></a>
+      <button id="lang-toggle" class="rounded-full border border-white/40 px-4 py-2 text-sm font-semibold hover:bg-white/10" aria-label="Switch language">English</button>
+    </div>
+  </header>
+  <main id="main" class="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
+    <section class="py-12 sm:py-16">
+      <p id="eyebrow" class="mb-3 text-sm font-bold uppercase tracking-[.2em] text-emerald-800">Villorba · Treviso</p>
+      <h1 id="hero-title" class="max-w-3xl text-4xl font-black tracking-tight sm:text-6xl">Tutti gli eventi al Palaverde</h1>
+      <p id="hero-copy" class="mt-5 max-w-2xl text-lg leading-8 text-stone-600">Basket, volley e concerti: trova il prossimo appuntamento, acquista i biglietti e pianifica la visita.</p>
+      <a id="map-link" class="mt-6 inline-flex font-semibold text-emerald-900 underline decoration-amber-500 decoration-2 underline-offset-4" target="_blank" rel="noopener">Via Guglielmo Marconi 10, Villorba · Indicazioni →</a>
+    </section>
+    <div class="ad-placeholder launch-hidden mb-8 flex items-center justify-center rounded-2xl border border-dashed border-stone-300 bg-white text-xs text-stone-400" aria-label="Spazio pubblicitario" data-ad-slot="top">Spazio pubblicitario</div>
+    <section aria-labelledby="events-heading">
+      <div class="mb-6 flex flex-wrap items-end justify-between gap-4">
+        <div><p id="event-count" class="text-sm font-semibold text-emerald-800">Calendario</p><h2 id="events-heading" class="mt-1 text-2xl font-extrabold sm:text-3xl">Prossimi eventi</h2></div>
+        <a id="ics-link" href="./events.ics" class="rounded-xl border border-stone-300 bg-white px-4 py-2.5 text-sm font-bold hover:border-emerald-800">Aggiungi al Calendario (.ics)</a>
+      </div>
+      <section aria-labelledby="calendar-title" class="mb-6 rounded-2xl border border-stone-200 bg-white p-4 shadow-sm sm:p-5">
+        <div class="mb-3 flex flex-wrap items-center justify-between gap-2">
+          <div><h3 id="calendar-title" class="font-extrabold">Prossimi 30 giorni</h3><p id="calendar-hint" class="mt-0.5 text-xs text-stone-500">Seleziona un giorno evidenziato per vedere gli eventi.</p></div>
+          <button id="show-all" type="button" class="hidden rounded-full bg-emerald-50 px-3 py-1.5 text-xs font-bold text-emerald-900 hover:bg-emerald-100">Mostra tutti</button>
+        </div>
+        <div id="calendar-weekdays" class="mb-1 grid grid-cols-7 gap-1 text-center text-[11px] font-bold uppercase tracking-wide text-stone-400" aria-hidden="true"></div>
+        <div id="calendar-grid" class="grid grid-cols-7 gap-1" aria-label="Calendario dei prossimi 30 giorni"></div>
+      </section>
+      <nav id="filters" class="mb-6 flex gap-2 overflow-x-auto pb-2" aria-label="Filtra eventi"></nav>
+      <div id="events-list" class="grid gap-4 md:grid-cols-2"></div>
+      <p id="empty-state" class="hidden rounded-2xl bg-white p-8 text-center text-stone-600">Nessun evento in programma. Torna presto a controllare!</p>
+    </section>
+    <div class="ad-placeholder launch-hidden my-8 flex items-center justify-center rounded-2xl border border-dashed border-stone-300 bg-white text-xs text-stone-400" aria-label="Spazio pubblicitario" data-ad-slot="between-events">Spazio pubblicitario</div>
+    <aside class="launch-hidden my-10 rounded-3xl bg-emerald-950 p-6 text-white sm:p-9">
+      <p id="sponsor-eyebrow" class="text-sm font-bold uppercase tracking-widest text-amber-300">Partner Locale</p>
+      <div class="mt-3 flex flex-col justify-between gap-5 sm:flex-row sm:items-center"><div><h2 id="sponsor-title" class="text-2xl font-extrabold">Promuovi la tua attività</h2><p id="sponsor-copy" class="mt-2 max-w-xl text-emerald-100">Raggiungi tifosi e visitatori del Palaverde con uno spazio in evidenza nel calendario.</p></div><a id="sponsor-link" class="shrink-0 rounded-xl bg-amber-300 px-5 py-3 text-center font-extrabold text-emerald-950 hover:bg-amber-200">Prenota questo spazio</a></div>
+    </aside>
+    <div class="ad-placeholder launch-hidden mb-8 flex items-center justify-center rounded-2xl border border-dashed border-stone-300 bg-white text-xs text-stone-400" aria-label="Spazio pubblicitario" data-ad-slot="footer">Spazio pubblicitario</div>
+    <footer class="border-t border-stone-200 pt-6 text-sm text-stone-500"><p id="footer-copy">Calendario informativo indipendente. Verifica dettagli e disponibilità presso l'organizzatore ufficiale.</p><p class="mt-2"><a id="footer-map" class="underline" target="_blank" rel="noopener">Palaverde · Villorba (TV)</a></p></footer>
+  </main>
+  <dialog id="event-dialog" class="m-auto max-h-[90dvh] w-[calc(100%-2rem)] max-w-xl overflow-y-auto rounded-3xl border-0 bg-white p-0 text-stone-900 shadow-2xl">
+    <article class="p-6 sm:p-8">
+      <div class="mb-5 flex items-start justify-between gap-4"><span id="modal-category" class="rounded-full bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-900"></span><button id="modal-close" type="button" class="-mr-2 -mt-2 flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-2xl leading-none text-stone-500 hover:bg-stone-100" aria-label="Chiudi">×</button></div>
+      <h2 id="modal-title" class="text-2xl font-black leading-tight sm:text-3xl"></h2>
+      <p id="modal-date" class="mt-3 font-semibold text-stone-600"></p>
+      <p id="modal-description" class="mt-4 whitespace-pre-line leading-7 text-stone-600"></p>
+      <div class="mt-5 rounded-2xl bg-stone-50 p-4"><p id="modal-venue" class="font-bold"></p><p id="modal-address" class="mt-1 text-sm text-stone-600"></p><a id="modal-map" href="#" target="_blank" rel="noopener" class="mt-2 inline-block text-sm font-semibold text-emerald-900 underline underline-offset-4"></a></div>
+      <div class="mt-6 grid gap-3 sm:grid-cols-2"><a id="modal-ticket" href="#" target="_blank" rel="sponsored nofollow noopener" class="rounded-xl bg-emerald-900 px-4 py-3 text-center text-sm font-extrabold text-white hover:bg-emerald-800"></a><a id="modal-hotel" href="#" target="_blank" rel="sponsored nofollow noopener" class="rounded-xl border border-stone-300 px-4 py-3 text-center text-sm font-bold text-stone-700 hover:border-emerald-800"></a><a id="modal-ics" href="#" class="rounded-xl border border-stone-300 px-4 py-3 text-center text-sm font-bold text-stone-700 hover:border-emerald-800 sm:col-span-2"></a></div>
+    </article>
+  </dialog>
+  <script type="module">
+    const $ = (id) => document.getElementById(id);
+    const copy = {
+      it: { eyebrow:'Villorba · Treviso', hero:'Tutti gli eventi al Palaverde', intro:'Basket, volley e concerti: trova il prossimo appuntamento, acquista i biglietti e pianifica la visita.', address:'Via Guglielmo Marconi 10, Villorba · Indicazioni →', calendar:'Aggiungi al Calendario (.ics)', upcoming:'Prossimi eventi', filters:['Tutti','Basket','Volley','Concerti'],empty:'Nessun evento in programma. Torna presto a controllare!',partner:'Partner Locale',sponsorTitle:'Promuovi la tua attività',sponsorCopy:'Raggiungi tifosi e visitatori del Palaverde con uno spazio in evidenza nel calendario.',book:'Prenota questo spazio',footer:"Calendario informativo indipendente. Verifica dettagli e disponibilità presso l'organizzatore ufficiale.",buy:'Acquista Biglietti',hotel:'Hotel vicino all’arena',add:'Aggiungi al Calendario',noDate:'Data da confermare',count:n=>`${n} ${n===1?'evento':'eventi'} in programma`,basket:'Basket',volley:'Volley',concert:'Concerti',event:'Evento',calendarTitle:'Prossimi 30 giorni',calendarHint:'Seleziona un giorno evidenziato per vedere gli eventi.',showAll:'Mostra tutti',weekdays:['Lun','Mar','Mer','Gio','Ven','Sab','Dom'],close:'Chiudi',map:'Apri in Google Maps →',noDescription:'Nessuna descrizione disponibile.',modalDate:d=>new Intl.DateTimeFormat('it-IT',{dateStyle:'full',timeStyle:d.includes('T')?'short':undefined,timeZone:cfg.venue.timezone}).format(new Date(d))},
+      en: { eyebrow:'Villorba · Treviso', hero:'Events at Palaverde', intro:'Basketball, volleyball and concerts: find your next event, get tickets and plan your visit.', address:'Via Guglielmo Marconi 10, Villorba · Directions →', calendar:'Add to Calendar (.ics)', upcoming:'Upcoming events', filters:['All','Basketball','Volleyball','Concerts'],empty:'No upcoming events. Check back soon!',partner:'Local Partner',sponsorTitle:'Promote your business',sponsorCopy:'Reach Palaverde fans and visitors with a featured spot in the calendar.',book:'Book this spot',footer:'Independent event guide. Check details and availability with the official organizer.',buy:'Buy tickets',hotel:'Hotels near the arena',add:'Add to Calendar',noDate:'Date to be confirmed',count:n=>`${n} upcoming event${n===1?'':'s'}`,basket:'Basketball',volley:'Volleyball',concert:'Concerts',event:'Event',calendarTitle:'Next 30 days',calendarHint:'Choose a highlighted day to see its events.',showAll:'Show all',weekdays:['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],close:'Close',map:'Open in Google Maps →',noDescription:'No description available.',modalDate:d=>new Intl.DateTimeFormat('en-GB',{dateStyle:'full',timeStyle:d.includes('T')?'short':undefined,timeZone:cfg.venue.timezone}).format(new Date(d))}
+    };
+    const catKey = { all:'all', basket:'basket', basketball:'basket', volley:'volley', volleyball:'volley', concert:'concert', concerts:'concert' };
+    const dotClass = { basket:'bg-amber-400', volley:'bg-sky-400', concert:'bg-rose-400', all:'bg-white' };
+    let lang='it', selected='all', selectedDate=null, events=[], cfg, activeModalEvent=null;
+    const escapeHtml = s => String(s ?? '').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    const localized = (value) => typeof value==='object' && value ? (value[lang] || value.it || '') : (value || '');
+    const affiliateUrl = (obj, event) => {
+      const base=obj?.urlTemplate || obj?.fallbackUrl || '#';
+      return base.replaceAll('{event}',encodeURIComponent(localized(event.title)||'Palaverde')).replaceAll('{venue}',encodeURIComponent(cfg.venue.name));
+    };
+    const eventCategory = event => catKey[String(event.category||'').toLowerCase()] || 'all';
+    const dateKey = date => {
+      const parts=new Intl.DateTimeFormat('en-GB',{timeZone:cfg.venue.timezone,year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(date);
+      const part=type=>parts.find(p=>p.type===type)?.value;
+      return `${part('year')}-${part('month')}-${part('day')}`;
+    };
+    const keyDate = key => new Date(`${key}T00:00:00Z`);
+    const datePlusDays = (key, amount) => {const d=keyDate(key);d.setUTCDate(d.getUTCDate()+amount);return d.toISOString().slice(0,10)};
+    const todayKey = () => dateKey(new Date());
+    const hasValidDate = event => event.startDate && Number.isFinite(new Date(event.startDate).getTime());
+    const listForFilters = () => events.filter(e=>(!selectedDate||(hasValidDate(e)&&dateKey(new Date(e.startDate))===selectedDate))&&(selected==='all'||eventCategory(e)===selected));
+    function setLanguage(next){
+      lang=next;document.documentElement.lang=lang;const t=copy[lang];
+      $('lang-toggle').textContent=lang==='it'?'English':'Italiano';$('hero-title').textContent=t.hero;$('hero-copy').textContent=t.intro;$('eyebrow').textContent=t.eyebrow;$('map-link').textContent=t.address;$('ics-link').textContent=t.calendar;$('events-heading').textContent=t.upcoming;$('empty-state').textContent=t.empty;
+      $('sponsor-eyebrow').textContent=cfg.sponsor.title||t.partner;$('sponsor-title').textContent=lang==='it'?'Promuovi la tua attività':'Promote your business';$('sponsor-copy').textContent=localized(cfg.sponsor.description)||t.sponsorCopy;$('sponsor-link').textContent=localized(cfg.sponsor.cta)||t.book;$('sponsor-link').href=cfg.sponsor.url||'#';$('footer-copy').textContent=t.footer;$('footer-map').textContent=`${cfg.venue.name} · ${cfg.venue.city} (${cfg.venue.province})`;
+      $('calendar-title').textContent=t.calendarTitle;$('calendar-hint').textContent=t.calendarHint;$('show-all').textContent=t.showAll;$('modal-close').setAttribute('aria-label',t.close);$('modal-map').textContent=t.map;
+      renderCalendar();renderFilters();renderEvents();if(activeModalEvent)renderModal(activeModalEvent);
+    }
+    function renderCalendar(){
+      const t=copy[lang],start=todayKey(),days=t.weekdays;
+      $('calendar-weekdays').innerHTML=days.map(d=>`<div class="py-1">${d}</div>`).join('');
+      const weekday=keyDate(start).getUTCDay(),padding=(weekday+6)%7;
+      const cells=Array.from({length:padding},()=>'<div aria-hidden="true"></div>');
+      for(let i=0;i<30;i++){
+        const key=datePlusDays(start,i),dayEvents=events.filter(e=>hasValidDate(e)&&dateKey(new Date(e.startDate))===key),categories=[...new Set(dayEvents.map(eventCategory))].filter(c=>c!=='all');
+        const active=key===selectedDate,hasEvents=dayEvents.length>0;
+        const label=new Intl.DateTimeFormat(lang==='it'?'it-IT':'en-GB',{day:'numeric',month:'long',timeZone:'UTC'}).format(keyDate(key));
+        const base=hasEvents?'bg-emerald-900 text-white hover:bg-emerald-800':'bg-stone-50 text-stone-400';
+        const ring=active?'ring-2 ring-amber-400 ring-offset-1':'';
+        const dots=categories.length?`<span class="mt-0.5 flex h-1.5 items-center justify-center gap-0.5">${categories.slice(0,3).map(c=>`<i class="h-1 w-1 rounded-full ${dotClass[c]||'bg-white'}"></i>`).join('')}</span>`:'<span class="mt-0.5 block h-1.5"></span>';
+        cells.push(`<button type="button" data-day="${key}" ${hasEvents?'':'disabled'} aria-label="${escapeHtml(label)}${hasEvents?`, ${dayEvents.length} ${lang==='it'?'eventi':'events'}`:''}" aria-pressed="${active}" class="flex min-h-11 flex-col items-center justify-center rounded-xl text-sm font-bold transition ${base} ${ring} disabled:cursor-default"><span>${key.slice(-2).replace(/^0/,'')}</span>${dots}</button>`);
+      }
+      $('calendar-grid').innerHTML=cells.join('');$('calendar-grid').querySelectorAll('button[data-day]').forEach(button=>button.addEventListener('click',()=>{selectedDate=button.dataset.day;selected='all';renderCalendar();renderFilters();renderEvents();requestAnimationFrame(()=>{$('events-list').querySelector('article')?.scrollIntoView({behavior:'smooth',block:'start'})})}));
+      $('show-all').classList.toggle('hidden',!selectedDate&&selected==='all');
+    }
+    function renderFilters(){const t=copy[lang];$('filters').innerHTML=t.filters.map((label,i)=>{const key=['all','basket','volley','concert'][i];return `<button data-category="${key}" aria-pressed="${selected===key}" class="shrink-0 rounded-full px-4 py-2 text-sm font-bold ${selected===key?'bg-emerald-950 text-white':'bg-white text-stone-700 ring-1 ring-stone-200 hover:ring-emerald-700'}">${label}</button>`}).join('');$('filters').querySelectorAll('button').forEach(b=>b.onclick=()=>{selected=b.dataset.category;renderFilters();renderCalendar();renderEvents()});}
+    function makeIcs(event){
+      if(!hasValidDate(event))return;
+      const dt=new Date(event.startDate),stamp=d=>d.toISOString().replace(/[-:]/g,'').replace(/\.\d{3}/,'');
+      const esc=s=>String(s||'').replace(/\\/g,'\\\\').replace(/;/g,'\\;').replace(/,/g,'\\,').replace(/\n/g,'\\n');
+      const body=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Palaverde Eventi//IT','BEGIN:VEVENT',`UID:${encodeURIComponent(localized(event.title))}-${event.startDate}@palaverde`,`DTSTAMP:${stamp(new Date())}`,`DTSTART:${stamp(dt)}`,`SUMMARY:${esc(localized(event.title))}`,`LOCATION:${esc(cfg.venue.name+', '+cfg.venue.address+', '+cfg.venue.city)}`,`URL:${esc(event.ticketUrl||cfg.venue.mapUrl)}`,'END:VEVENT','END:VCALENDAR'].join('\r\n');
+      const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([body],{type:'text/calendar;charset=utf-8'}));a.download=`${(event.startDate||'evento').slice(0,10)}-palaverde.ics`;a.click();URL.revokeObjectURL(a.href);
+    }
+    function renderEvents(){
+      const t=copy[lang],shown=listForFilters();$('event-count').textContent=t.count(shown.length);$('empty-state').classList.toggle('hidden',shown.length>0);
+      $('events-list').innerHTML=shown.map(e=>{
+        const index=events.indexOf(e),date=e.startDate?new Date(e.startDate):null;
+        const dateText=date&&!isNaN(date)?new Intl.DateTimeFormat(lang==='it'?'it-IT':'en-GB',{weekday:'short',day:'numeric',month:'long',hour:e.startDate.includes('T')?'2-digit':undefined,minute:e.startDate.includes('T')?'2-digit':undefined,timeZone:cfg.venue.timezone}).format(date):t.noDate;
+        const category=eventCategory(e),cat=category==='all'?t.event:t[category],ticket=e.ticketUrl||affiliateUrl(cfg.affiliates.tickets,e),hotels=affiliateUrl(cfg.affiliates.hotels,e),details=localized(e.description);
+        return `<article tabindex="0" role="button" aria-label="${lang==='it'?'Dettagli evento':'Event details'}: ${escapeHtml(localized(e.title))}" data-event-index="${index}" class="cursor-pointer rounded-2xl border border-stone-200 bg-white p-5 shadow-sm transition hover:border-emerald-800 hover:shadow-md" itemscope itemtype="https://schema.org/Event"><meta itemprop="startDate" content="${escapeHtml(e.startDate||'')}"><meta itemprop="eventStatus" content="https://schema.org/EventScheduled"><meta itemprop="eventAttendanceMode" content="https://schema.org/OfflineEventAttendanceMode"><div itemprop="location" itemscope itemtype="https://schema.org/StadiumOrArena"><meta itemprop="name" content="${escapeHtml(cfg.venue.name)}"><meta itemprop="url" content="${escapeHtml(cfg.venue.mapUrl)}"><div itemprop="address" itemscope itemtype="https://schema.org/PostalAddress"><meta itemprop="streetAddress" content="${escapeHtml(cfg.venue.address)}"><meta itemprop="addressLocality" content="${escapeHtml(cfg.venue.city)}"><meta itemprop="addressRegion" content="${escapeHtml(cfg.venue.region)}"><meta itemprop="postalCode" content="${escapeHtml(cfg.venue.postalCode)}"><meta itemprop="addressCountry" content="IT"></div></div><div class="flex items-center justify-between gap-2"><span class="rounded-full bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-900">${escapeHtml(cat)}</span><time class="text-sm font-semibold text-stone-500" datetime="${escapeHtml(e.startDate||'')}">${escapeHtml(dateText)}</time></div><h3 itemprop="name" class="mt-4 text-xl font-extrabold">${escapeHtml(localized(e.title))}</h3>${details?`<p itemprop="description" class="mt-2 text-sm leading-6 text-stone-600">${escapeHtml(details)}</p>`:''}<p class="mt-3 text-sm text-stone-500">${escapeHtml(e.venue||cfg.venue.name)}${e.location?` · ${escapeHtml(e.location)}`:''}</p><meta itemprop="url" content="${escapeHtml(ticket)}"><div class="mt-5 flex flex-wrap items-center gap-3"><a href="${escapeHtml(ticket)}" target="_blank" rel="sponsored nofollow noopener" class="rounded-xl bg-emerald-900 px-4 py-2.5 text-sm font-bold text-white hover:bg-emerald-800">${t.buy} →</a><a href="./events.ics" data-event-ics="${index}" class="text-sm font-semibold text-stone-600 underline underline-offset-4">${t.add} (.ics)</a><a href="${escapeHtml(hotels)}" target="_blank" rel="sponsored nofollow noopener" class="ml-auto text-xs text-stone-500 underline underline-offset-4">${t.hotel}</a></div></article>`;
+      }).join('');
+      $('events-list').querySelectorAll('[data-event-index]').forEach(card=>{
+        const open=()=>openModal(events[Number(card.dataset.eventIndex)]);
+        card.addEventListener('click',ev=>{if(ev.target.closest('a,button'))return;open()});
+        card.addEventListener('keydown',ev=>{if((ev.key==='Enter'||ev.key===' ')&&ev.target===card){ev.preventDefault();open()}});
+      });
+      $('events-list').querySelectorAll('[data-event-ics]').forEach(link=>link.addEventListener('click',ev=>{ev.preventDefault();makeIcs(events[Number(ev.currentTarget.dataset.eventIcs)])}));
+    }
+    function renderModal(event){
+      const t=copy[lang],category=eventCategory(event),title=localized(event.title),date=event.startDate;
+      const ticket=event.ticketUrl||affiliateUrl(cfg.affiliates.tickets,event),hotel=affiliateUrl(cfg.affiliates.hotels,event);
+      $('modal-category').textContent=category==='all'?t.event:t[category];$('modal-title').textContent=title;$('modal-date').textContent=date?t.modalDate(date):t.noDate;$('modal-description').textContent=localized(event.description)||t.noDescription;
+      $('modal-venue').textContent=cfg.venue.name;$('modal-address').textContent=`${cfg.venue.address}, ${cfg.venue.postalCode} ${cfg.venue.city} (${cfg.venue.province}), Italia`;$('modal-map').href=cfg.venue.mapUrl;
+      $('modal-ticket').textContent=`${t.buy} →`;$('modal-ticket').href=ticket;$('modal-hotel').textContent=t.hotel;$('modal-hotel').href=hotel;$('modal-ics').textContent=`${t.add} (.ics)`;$('modal-ics').onclick=ev=>{ev.preventDefault();if(event.startDate)makeIcs(event)};
+    }
+    function openModal(event){if(!event)return;activeModalEvent=event;renderModal(event);$('event-dialog').showModal()}
+    $('lang-toggle').addEventListener('click',()=>setLanguage(lang==='it'?'en':'it'));
+    $('show-all').addEventListener('click',()=>{selectedDate=null;selected='all';renderCalendar();renderFilters();renderEvents()});
+    $('modal-close').addEventListener('click',()=>$('event-dialog').close());
+    $('event-dialog').addEventListener('close',()=>{activeModalEvent=null});
+    $('event-dialog').addEventListener('click',ev=>{if(ev.target===$('event-dialog'))$('event-dialog').close()});
+    try {
+      const c=await fetch('./venue.json');if(!c.ok)throw Error('venue.json unavailable');cfg=await c.json();
+      const d=await fetch(cfg.data.eventsUrl||'./events.json');if(d.ok){const data=await d.json();events=Array.isArray(data)?data:(data.events||[])}
+      $('map-link').href=cfg.venue.mapUrl;$('footer-map').href=cfg.venue.mapUrl;document.querySelector('meta[name="description"]').content=cfg.venue.description.it;document.querySelector('link[rel="canonical"]').href=cfg.venue.canonicalUrl+'/';document.title=`Eventi al ${cfg.venue.name} | Basket, Volley e Concerti`;
+      const venueLd={"@context":"https://schema.org","@type":"StadiumOrArena","name":cfg.venue.name,"alternateName":cfg.venue.alternateName,"description":cfg.venue.description.it,"url":cfg.venue.canonicalUrl,"address":{"@type":"PostalAddress","streetAddress":cfg.venue.address,"addressLocality":cfg.venue.city,"addressRegion":cfg.venue.region,"postalCode":cfg.venue.postalCode,"addressCountry":cfg.venue.country},"geo":{"@type":"GeoCoordinates","latitude":cfg.venue.latitude,"longitude":cfg.venue.longitude}};
+      const schema=document.createElement('script');schema.type='application/ld+json';schema.textContent=JSON.stringify(venueLd);document.head.append(schema);setLanguage('it');
+    } catch(err){console.error(err);$('empty-state').classList.remove('hidden');$('empty-state').textContent='Impossibile caricare il calendario. Riprova più tardi.';}
+  </script>
+</body>
+</html>
