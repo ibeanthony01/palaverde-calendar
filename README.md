@@ -27,7 +27,31 @@ A static, mobile-first Italian event calendar with an English toggle. Venue deta
 
 ## Local scraper use
 
-Python 3.10+ is required. From the project directory, install `requirements.txt` and run `python scripts/scrape_events.py`. It writes `events.json` and `events.ics`. Events without a confirmed date are excluded. Failed sources are recorded in the JSON and printed in the run log. An empty result can mean a source has no public JSON-LD feed; configure permitted event detail pages or a documented feed before relying on automation.
+Python 3.10+ is required. From the project directory, install `requirements.txt` and run `python scripts/scrape_events.py`. It writes `events.json` and `events.ics`. The script reads the configured team schedule parsers and ticketing JSON-LD sources, then merges non-past entries from `scripts/manual_events.json`. Manual entries take precedence over scraped duplicates with the same title and start time. Past manual dates are omitted. Failed sources are recorded in the JSON and printed in the run log.
+
+### Adding concerts and special events manually
+
+Edit `scripts/manual_events.json` and add event objects to the array. Use ISO 8601 for `startDate` and optional `endDate`; include a timezone offset for timed events (the example uses Italy's summer offset). A date-only value creates an all-day calendar event. `title` and `description` may be plain strings or Italian/English objects. `category` can be `concert`, `basket`, or `volley`.
+
+Example entry:
+
+```json
+[
+  {
+    "title": {"it": "Concerto di esempio", "en": "Example concert"},
+    "startDate": "2027-06-12T21:00:00+02:00",
+    "endDate": "2027-06-12T23:00:00+02:00",
+    "description": {"it": "Descrizione in italiano.", "en": "English description."},
+    "category": "concert",
+    "venue": "Palaverde",
+    "location": "Villorba, Treviso",
+    "ticketUrl": "https://example.com/tickets",
+    "sourceUrl": "manual"
+  }
+]
+```
+
+The committed file starts as an empty array (`[]`). The weekly GitHub Action runs the same scraper, so committed manual events remain part of every generated calendar.
 
 ## Monetization and operations
 

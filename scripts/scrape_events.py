@@ -271,6 +271,8 @@ def ics_escape(value):
 
 
 def ics_date(value):
+    if isinstance(value, str) and re.fullmatch(r"\d{4}-\d{2}-\d{2}", value):
+        return datetime.strptime(value, "%Y-%m-%d").strftime("%Y%m%d")
     dt = datetime.fromisoformat(value.replace("Z", "+00:00"))
     if dt.tzinfo is None:
         dt = dt.replace(tzinfo=timezone.utc)
@@ -280,16 +282,81 @@ def ics_date(value):
 def write_ics(events):
     lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Palaverde Eventi//IT", "CALSCALE:GREGORIAN", "METHOD:PUBLISH"]
     for event in events:
-        uid = re.sub(r"[^a-zA-Z0-9]+", "-", event["title"]).strip("-").lower() + "-" + event["startDate"][:10] + "@palaverde-calendar"
-        lines += ["BEGIN:VEVENT", f"UID:{ics_escape(uid)}", f"DTSTAMP:{datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')}", f"DTSTART:{ics_date(event['startDate'])}"]
+        title = title_text(event["title"])
+        uid = re.sub(r"[^a-zA-Z0-9]+", "-", title).strip("-").lower() + "-" + event["startDate"][:10] + "@palaverde-calendar"
+        start_property = "DTSTART;VALUE=DATE" if re.fullmatch(r"\d{4}-\d{2}-\d{2}", event["startDate"]) else "DTSTART"
+        lines += ["BEGIN:VEVENT", f"UID:{ics_escape(uid)}", f"DTSTAMP:{datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')}", f"{start_property}:{ics_date(event['startDate'])}"]
         if event.get("endDate"):
-            lines.append(f"DTEND:{ics_date(event['endDate'])}")
-        lines += [f"SUMMARY:{ics_escape(event['title'])}", f"LOCATION:{ics_escape(VENUE['name'] + ', ' + VENUE['address'] + ', ' + VENUE['city'])}", f"DESCRIPTION:{ics_escape(event.get('description', ''))}", f"URL:{ics_escape(event.get('ticketUrl', ''))}", "END:VEVENT"]
+            end_property = "DTEND;VALUE=DATE" if re.fullmatch(r"\d{4}-\d{2}-\d{2}", event["endDate"]) else "DTEND"
+            lines.append(f"{end_property}:{ics_date(event['endDate'])}")
+        lines += [f"SUMMARY:{ics_escape(title)}", f"LOCATION:{ics_escape(VENUE['name'] + ', ' + VENUE['address'] + ', ' + VENUE['city'])}", f"DESCRIPTION:{ics_escape(title_text(event.get('description', '')))}", f"URL:{ics_escape(event.get('ticketUrl', ''))}", "END:VEVENT"]
     lines.append("END:VCALENDAR")
     return "\r\n".join(lines) + "\r\n"
 
 
+def parse_local_datetime(value):
+    """Parse an ISO start value; naive values are treated as Europe/Rome local time."""
+    if not isinstance(value, str) or not value.strip():
+        raise ValueError("startDate must be a non-empty ISO 8601 string")
+    try:
+        parsed = datetime.fromisoformat(value.strip().replace("Z", "+00:00"))
+    except ValueError as exc:
+        raise ValueError(f"Invalid ISO 8601 startDate: {value}") from exc
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=ROME)
+    return parsed
+
+
+def title_text(value):
+    if isinstance(value, dict):
+        value = value.get("it") or value.get("en") or next(iter(value.values()), "")
+    return re.sub(r"\s+", " ", str(value or "")).strip()
+
+
+def event_key(event):
+    title = normalized(title_text(event.get("title", "")))
+    start = parse_local_datetime(event["startDate"]).astimezone(ROME).isoformat(timespec="minutes")
+    return title, start
+
+
+def load_manual_events():
+    """Load valid, non-past manual events while preserving the frontend event shape."""
+    path = ROOT / "scripts/manual_events.json"
+    data = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(data, list):
+        raise ValueError("scripts/manual_events.json must contain a JSON array")
+
+    today = datetime.now(ROME).date()
+    records = []
+    for index, item in enumerate(data):
+        if not isinstance(item, dict):
+            raise ValueError(f"Manual event at index {index} must be an object")
+        title = item.get("title")
+        if not title_text(title):
+            raise ValueError(f"Manual event at index {index} is missing a title")
+        start_value = item.get("startDate")
+        start = parse_local_datetime(start_value)
+        if start.astimezone(ROME).date() < today:
+            continue
+
+        event = {
+            "title": title,
+            "startDate": start_value.strip(),
+            "description": item.get("description", ""),
+            "category": item.get("category", "concert"),
+            "venue": item.get("venue", VENUE["name"]),
+            "location": item.get("location", f"{VENUE['city']}, {VENUE['province']}"),
+            "ticketUrl": item.get("ticketUrl", ""),
+            "sourceUrl": item.get("sourceUrl", "manual"),
+        }
+        if item.get("endDate"):
+            event["endDate"] = item["endDate"]
+        records.append(event)
+    return records
+
+
 def main():
+    manual_events = load_manual_events()
     results, failures = [], []
     for source in CONFIG["sources"]:
         try:
@@ -299,10 +366,14 @@ def main():
         except Exception as exc:
             failures.append(f"{source['name']}: {exc}")
             print(f"Warning: {failures[-1]}", file=sys.stderr)
+    # Scraped duplicates are collapsed first; manual versions then take precedence
+    # for a matching title/start time so later scraping cannot erase editorial data.
     unique = {}
     for event in results:
-        key = (event["title"].strip().lower(), event["startDate"])
+        key = event_key(event)
         unique[key] = event
+    for event in manual_events:
+        unique[event_key(event)] = event
     events = sorted(unique.values(), key=lambda x: x["startDate"])
     payload = {"updatedAt": datetime.now(timezone.utc).isoformat(), "events": events, "sourceFailures": failures}
     (ROOT / "events.json").write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

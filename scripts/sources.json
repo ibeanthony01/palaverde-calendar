@@ -12,18 +12,6 @@
       "url": "https://imocovolley.it/calendar/calendario-incontri-2026-27/",
       "category": "volley",
       "parser": "imoco"
-    },
-    {
-   "name": "Vivaticket Palaverde",
-"url": "https://www.vivaticket.com/it/venue/palaverde/512380050",
-   "category": "concert",
-   "parser": "jsonld"
- },
-    {
-      "name": "TicketOne Treviso",
-      "url": "https://www.ticketone.it/cityd/treviso-2045/concerti-55/",
-      "category": "concert",
-      "parser": "jsonld"
     }
   ]
 }
