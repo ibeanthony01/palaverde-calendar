@@ -194,5 +194,9 @@
       const schema=document.createElement('script');schema.type='application/ld+json';schema.textContent=JSON.stringify(venueLd);document.head.append(schema);selectedMonth=todayKey().slice(0,7);setLanguage('it');
     } catch(err){console.error(err);$('empty-state').classList.remove('hidden');$('empty-state').textContent='Impossibile caricare il calendario. Riprova più tardi.';}
   </script>
+  <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  </script>
+  <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
