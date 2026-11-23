@@ -42,8 +42,16 @@
       </div>
       <section aria-labelledby="calendar-title" class="mb-6 rounded-2xl border border-stone-200 bg-white p-4 shadow-sm sm:p-5">
         <div class="mb-3 flex flex-wrap items-center justify-between gap-2">
-          <div><h3 id="calendar-title" class="font-extrabold">Prossimi 30 giorni</h3><p id="calendar-hint" class="mt-0.5 text-xs text-stone-500">Seleziona un giorno evidenziato per vedere gli eventi.</p></div>
+          <div class="mb-3 grid grid-cols-[auto_1fr_auto_auto] items-center gap-2">
+            <button id="month-prev" type="button" class="flex h-9 w-9 items-center justify-center rounded-full text-2xl leading-none text-stone-600 hover:bg-stone-100" aria-label="Mese precedente">‹</button>
+            <h3 id="calendar-title" class="text-center text-base font-extrabold capitalize sm:text-lg">Novembre 2026</h3>
+            <button id="month-today" type="button" class="rounded-full px-3 py-1.5 text-xs font-semibold text-stone-500 hover:bg-stone-100 hover:text-emerald-900">Oggi</button>
+            <button id="month-next" type="button" class="flex h-9 w-9 items-center justify-center rounded-full text-2xl leading-none text-stone-600 hover:bg-stone-100" aria-label="Mese successivo">›</button>
+          </div>
+          <div class="mb-3 flex flex-wrap items-center justify-between gap-2">
+            <p id="calendar-hint" class="text-xs text-stone-500">Seleziona un giorno evidenziato per vedere gli eventi.</p>
           <button id="show-all" type="button" class="hidden rounded-full bg-emerald-50 px-3 py-1.5 text-xs font-bold text-emerald-900 hover:bg-emerald-100">Mostra tutti</button>
+          </div>
         </div>
         <div id="calendar-weekdays" class="mb-1 grid grid-cols-7 gap-1 text-center text-[11px] font-bold uppercase tracking-wide text-stone-400" aria-hidden="true"></div>
         <div id="calendar-grid" class="grid grid-cols-7 gap-1" aria-label="Calendario dei prossimi 30 giorni"></div>
@@ -81,8 +89,8 @@
   <script type="module">
     const $ = (id) => document.getElementById(id);
     const copy = {
-      it: { eyebrow:'Villorba · Treviso', hero:'Tutti gli eventi al Palaverde', intro:'Basket, volley e concerti: trova il prossimo appuntamento, acquista i biglietti e pianifica la visita.', address:'Via Guglielmo Marconi 10, Villorba · Indicazioni →', calendar:'Aggiungi al Calendario (.ics)', upcoming:'Prossimi eventi', filters:['Tutti','Basket','Volley','Concerti'],empty:'Nessun evento in programma. Torna presto a controllare!',partner:'Partner Locale',sponsorTitle:'Promuovi la tua attività',sponsorCopy:'Raggiungi tifosi e visitatori del Palaverde con uno spazio in evidenza nel calendario.',book:'Prenota questo spazio',footer:"Calendario informativo indipendente. Verifica dettagli e disponibilità presso l'organizzatore ufficiale.",buy:'Acquista Biglietti',hotel:'Hotel vicino all’arena',add:'Aggiungi al Calendario',noDate:'Data da confermare',count:n=>`${n} ${n===1?'evento':'eventi'} in programma`,basket:'Basket',volley:'Volley',concert:'Concerti',event:'Evento',calendarTitle:'Prossimi 30 giorni',calendarHint:'Seleziona un giorno evidenziato per vedere gli eventi.',showAll:'Mostra tutti',weekdays:['Lun','Mar','Mer','Gio','Ven','Sab','Dom'],close:'Chiudi',map:'Apri in Google Maps →',noDescription:'Nessuna descrizione disponibile.',modalDate:d=>new Intl.DateTimeFormat('it-IT',{dateStyle:'full',timeStyle:d.includes('T')?'short':undefined,timeZone:cfg.venue.timezone}).format(new Date(d))},
-      en: { eyebrow:'Villorba · Treviso', hero:'Events at Palaverde', intro:'Basketball, volleyball and concerts: find your next event, get tickets and plan your visit.', address:'Via Guglielmo Marconi 10, Villorba · Directions →', calendar:'Add to Calendar (.ics)', upcoming:'Upcoming events', filters:['All','Basketball','Volleyball','Concerts'],empty:'No upcoming events. Check back soon!',partner:'Local Partner',sponsorTitle:'Promote your business',sponsorCopy:'Reach Palaverde fans and visitors with a featured spot in the calendar.',book:'Book this spot',footer:'Independent event guide. Check details and availability with the official organizer.',buy:'Buy tickets',hotel:'Hotels near the arena',add:'Add to Calendar',noDate:'Date to be confirmed',count:n=>`${n} upcoming event${n===1?'':'s'}`,basket:'Basketball',volley:'Volleyball',concert:'Concerts',event:'Event',calendarTitle:'Next 30 days',calendarHint:'Choose a highlighted day to see its events.',showAll:'Show all',weekdays:['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],close:'Close',map:'Open in Google Maps →',noDescription:'No description available.',modalDate:d=>new Intl.DateTimeFormat('en-GB',{dateStyle:'full',timeStyle:d.includes('T')?'short':undefined,timeZone:cfg.venue.timezone}).format(new Date(d))}
+      it: { eyebrow:'Villorba · Treviso', hero:'Tutti gli eventi al Palaverde', intro:'Basket, volley e concerti: trova il prossimo appuntamento, acquista i biglietti e pianifica la visita.', address:'Via Guglielmo Marconi 10, Villorba · Indicazioni →', calendar:'Aggiungi al Calendario (.ics)', upcoming:'Prossimi eventi', filters:['Tutti','Basket','Volley','Concerti'],empty:'Nessun evento in programma. Torna presto a controllare!',partner:'Partner Locale',sponsorTitle:'Promuovi la tua attività',sponsorCopy:'Raggiungi tifosi e visitatori del Palaverde con uno spazio in evidenza nel calendario.',book:'Prenota questo spazio',footer:"Calendario informativo indipendente. Verifica dettagli e disponibilità presso l'organizzatore ufficiale.",buy:'Acquista Biglietti',hotel:'Hotel vicino all’arena',add:'Aggiungi al Calendario',noDate:'Data da confermare',count:n=>`${n} ${n===1?'evento':'eventi'} in programma`,basket:'Basket',volley:'Volley',concert:'Concerti',event:'Evento',calendarHint:'Seleziona un giorno evidenziato per vedere gli eventi.',showAll:'Mostra tutti',today:'Oggi',previousMonth:'Mese precedente',nextMonth:'Mese successivo',weekdays:['Lun','Mar','Mer','Gio','Ven','Sab','Dom'],close:'Chiudi',map:'Apri in Google Maps →',noDescription:'Nessuna descrizione disponibile.',modalDate:d=>new Intl.DateTimeFormat('it-IT',{dateStyle:'full',timeStyle:d.includes('T')?'short':undefined,timeZone:cfg.venue.timezone}).format(new Date(d))},
+      en: { eyebrow:'Villorba · Treviso', hero:'Events at Palaverde', intro:'Basketball, volleyball and concerts: find your next event, get tickets and plan your visit.', address:'Via Guglielmo Marconi 10, Villorba · Directions →', calendar:'Add to Calendar (.ics)', upcoming:'Upcoming events', filters:['All','Basketball','Volleyball','Concerts'],empty:'No upcoming events. Check back soon!',partner:'Local Partner',sponsorTitle:'Promote your business',sponsorCopy:'Reach Palaverde fans and visitors with a featured spot in the calendar.',book:'Book this spot',footer:'Independent event guide. Check details and availability with the official organizer.',buy:'Buy tickets',hotel:'Hotels near the arena',add:'Add to Calendar',noDate:'Date to be confirmed',count:n=>`${n} upcoming event${n===1?'':'s'}`,basket:'Basketball',volley:'Volleyball',concert:'Concerts',event:'Event',calendarHint:'Choose a highlighted day to see its events.',showAll:'Show all',today:'Today',previousMonth:'Previous month',nextMonth:'Next month',weekdays:['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],close:'Close',map:'Open in Google Maps →',noDescription:'No description available.',modalDate:d=>new Intl.DateTimeFormat('en-GB',{dateStyle:'full',timeStyle:d.includes('T')?'short':undefined,timeZone:cfg.venue.timezone}).format(new Date(d))}
     };
     const gettingCopy = {
       it:{title:'Info Utili',carTitle:'Auto & Parcheggio',car:'Via Guglielmo Marconi 10, Villorba (TV). Uscita A27 Treviso Nord (circa 5 min) o Strada Ovest. Ampi parcheggi gratuiti direttamente intorno all’arena.',transitTitle:'Mezzi Pubblici',transit:'Autobus MOM urbani ed extraurbani dalla stazione di Treviso Centrale verso Villorba / Lancenigo; dalla stazione ferroviaria di Lancenigo, circa 15 minuti a piedi.',doorsTitle:'Biglietteria & Porte',doors:'La biglietteria dell’arena apre 90 minuti prima della partita o dello spettacolo. Per le partite importanti e i concerti, consigliamo di arrivare 45 minuti prima.'},
@@ -90,7 +98,7 @@
     };
     const catKey = { all:'all', basket:'basket', basketball:'basket', volley:'volley', volleyball:'volley', concert:'concert', concerts:'concert' };
     const dotClass = { basket:'bg-amber-400', volley:'bg-sky-400', concert:'bg-rose-400', all:'bg-white' };
-    let lang='it', selected='all', selectedDate=null, events=[], cfg, activeModalEvent=null;
+    let lang='it', selected='all', selectedDate=null, selectedMonth=null, events=[], cfg, activeModalEvent=null;
     const escapeHtml = s => String(s ?? '').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
     const localized = (value) => typeof value==='object' && value ? (value[lang] || value.it || '') : (value || '');
     const affiliateUrl = (obj, event) => {
@@ -112,29 +120,31 @@
       lang=next;document.documentElement.lang=lang;const t=copy[lang];
       $('lang-toggle').textContent=lang==='it'?'English':'Italiano';$('hero-title').textContent=t.hero;$('hero-copy').textContent=t.intro;$('eyebrow').textContent=t.eyebrow;$('map-link').textContent=t.address;$('ics-link').textContent=t.calendar;$('events-heading').textContent=t.upcoming;$('empty-state').textContent=t.empty;
       $('sponsor-eyebrow').textContent=cfg.sponsor.title||t.partner;$('sponsor-title').textContent=lang==='it'?'Promuovi la tua attività':'Promote your business';$('sponsor-copy').textContent=localized(cfg.sponsor.description)||t.sponsorCopy;$('sponsor-link').textContent=localized(cfg.sponsor.cta)||t.book;$('sponsor-link').href=cfg.sponsor.url||'#';$('footer-copy').textContent=t.footer;$('footer-map').textContent=`${cfg.venue.name} · ${cfg.venue.city} (${cfg.venue.province})`;
-      $('calendar-title').textContent=t.calendarTitle;$('calendar-hint').textContent=t.calendarHint;$('show-all').textContent=t.showAll;$('modal-close').setAttribute('aria-label',t.close);$('modal-map').textContent=t.map;
+      $('calendar-hint').textContent=t.calendarHint;$('show-all').textContent=t.showAll;$('month-today').textContent=t.today;$('month-prev').setAttribute('aria-label',t.previousMonth);$('month-next').setAttribute('aria-label',t.nextMonth);$('modal-close').setAttribute('aria-label',t.close);$('modal-map').textContent=t.map;
       const info=gettingCopy[lang];$('getting-here-title').textContent=info.title;$('getting-car-title').textContent=info.carTitle;$('getting-car-copy').textContent=info.car;$('getting-transit-title').textContent=info.transitTitle;$('getting-transit-copy').textContent=info.transit;$('getting-doors-title').textContent=info.doorsTitle;$('getting-doors-copy').textContent=info.doors;
       renderCalendar();renderFilters();renderEvents();if(activeModalEvent)renderModal(activeModalEvent);
     }
     function renderCalendar(){
-      const t=copy[lang],start=todayKey();
+      const t=copy[lang],today=todayKey(),monthStart=keyDate(`${selectedMonth}-01`);
+      const year=monthStart.getUTCFullYear(),month=monthStart.getUTCMonth(),daysInMonth=new Date(Date.UTC(year,month+1,0)).getUTCDate();
+      const monthLabel=new Intl.DateTimeFormat(lang==='it'?'it-IT':'en-GB',{month:'long',year:'numeric',timeZone:'UTC'}).format(monthStart);
+      $('calendar-title').textContent=lang==='it'?monthLabel.replace(/^./,letter=>letter.toLocaleUpperCase('it-IT')):monthLabel;
       const weekdays=lang==='it'?['LUN','MAR','MER','GIO','VEN','SAB','DOM']:['MON','TUE','WED','THU','FRI','SAT','SUN'];
-      $('calendar-weekdays').style.gridTemplateColumns='repeat(7,minmax(0,1fr))';
-      $('calendar-grid').style.gridTemplateColumns='repeat(7,minmax(0,1fr))';
-      $('calendar-weekdays').innerHTML=weekdays.map(d=>`<div class="py-1">${d}</div>`).join('');
-      const weekday=keyDate(start).getUTCDay(),padding=(weekday+6)%7;
-      const cells=Array.from({length:padding},()=>'<div aria-hidden="true"></div>');
-      for(let i=0;i<30;i++){
-        const key=datePlusDays(start,i),dayEvents=events.filter(e=>hasValidDate(e)&&dateKey(new Date(e.startDate))===key),categories=[...new Set(dayEvents.map(eventCategory))].filter(c=>c!=='all');
-        const active=key===selectedDate,hasEvents=dayEvents.length>0;
-        const label=new Intl.DateTimeFormat(lang==='it'?'it-IT':'en-GB',{day:'numeric',month:'long',timeZone:'UTC'}).format(keyDate(key));
-        const base=hasEvents?'bg-emerald-900 text-white hover:bg-emerald-800':'bg-stone-50 text-stone-400';
-        const ring=active?'ring-2 ring-amber-400 ring-offset-1':'';
-        const dots=categories.length?`<span class="mt-0.5 flex h-1.5 items-center justify-center gap-0.5">${categories.slice(0,3).map(c=>`<i class="h-1 w-1 rounded-full ${dotClass[c]||'bg-white'}"></i>`).join('')}</span>`:'<span class="mt-0.5 block h-1.5"></span>';
-        cells.push(`<button type="button" data-day="${key}" ${hasEvents?'':'disabled'} aria-label="${escapeHtml(label)}${hasEvents?`, ${dayEvents.length} ${lang==='it'?'eventi':'events'}`:''}" aria-pressed="${active}" class="flex min-h-11 flex-col items-center justify-center rounded-xl text-sm font-bold transition ${base} ${ring} disabled:cursor-default"><span>${key.slice(-2).replace(/^0/,'')}</span>${dots}</button>`);
+      $('calendar-weekdays').style.gridTemplateColumns='repeat(7,minmax(0,1fr))';$('calendar-grid').style.gridTemplateColumns='repeat(7,minmax(0,1fr))';
+      $('calendar-weekdays').innerHTML=weekdays.map(day=>`<div class="py-1">${day}</div>`).join('');
+      const offset=(monthStart.getUTCDay()+6)%7,cellCount=Math.ceil((offset+daysInMonth)/7)*7,firstDate=datePlusDays(`${selectedMonth}-01`,-offset),cells=[];
+      for(let i=0;i<cellCount;i++){
+        const key=datePlusDays(firstDate,i),date=keyDate(key),inMonth=date.getUTCMonth()===month,dayEvents=events.filter(event=>hasValidDate(event)&&dateKey(new Date(event.startDate))===key&&(selected==='all'||eventCategory(event)===selected)),categories=[...new Set(dayEvents.map(eventCategory))].filter(category=>category!=='all');
+        const hasEvents=dayEvents.length>0,active=key===selectedDate,isToday=key===today,muted=inMonth?'':'opacity-40';
+        const label=new Intl.DateTimeFormat(lang==='it'?'it-IT':'en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric',timeZone:'UTC'}).format(date);
+        const base=hasEvents?'bg-emerald-900 text-white hover:bg-emerald-800':inMonth?'bg-stone-50 text-stone-500 hover:bg-stone-100':'bg-transparent text-stone-300 hover:bg-stone-50';
+        const ring=active?'ring-2 ring-amber-400 ring-offset-1':isToday?'ring-1 ring-stone-300':'';
+        const dots=categories.length?`<span class="mt-0.5 flex h-1.5 items-center justify-center gap-0.5">${categories.slice(0,3).map(category=>`<i class="h-1 w-1 rounded-full ${dotClass[category]||'bg-white'}"></i>`).join('')}</span>`:'<span class="mt-0.5 block h-1.5"></span>';
+        cells.push(`<button type="button" data-day="${key}" ${hasEvents?'':'disabled'} aria-label="${escapeHtml(label)}${hasEvents?`, ${dayEvents.length} ${lang==='it'?'eventi':'events'}`:''}" aria-pressed="${active}" ${isToday?'aria-current="date"':''} class="flex min-h-11 flex-col items-center justify-center rounded-xl text-sm font-bold transition ${base} ${ring} ${muted} disabled:cursor-default"><span>${date.getUTCDate()}</span>${dots}</button>`);
       }
-      $('calendar-grid').innerHTML=cells.join('');$('calendar-grid').querySelectorAll('button[data-day]').forEach(button=>button.addEventListener('click',()=>{selectedDate=button.dataset.day;selected='all';renderCalendar();renderFilters();renderEvents();requestAnimationFrame(()=>{$('events-list').querySelector('article')?.scrollIntoView({behavior:'smooth',block:'start'})})}));
-      $('show-all').classList.toggle('hidden',!selectedDate&&selected==='all');
+      $('calendar-grid').innerHTML=cells.join('');
+      $('calendar-grid').querySelectorAll('button[data-day]').forEach(button=>button.addEventListener('click',()=>{selectedDate=button.dataset.day;selectedMonth=selectedDate.slice(0,7);renderCalendar();renderEvents();requestAnimationFrame(()=>{$('events-list').querySelector('article')?.scrollIntoView({behavior:'smooth',block:'start'})})}));
+      $('show-all').classList.toggle('hidden',!selectedDate);
     }
     function renderFilters(){const t=copy[lang];$('filters').innerHTML=t.filters.map((label,i)=>{const key=['all','basket','volley','concert'][i];return `<button data-category="${key}" aria-pressed="${selected===key}" class="shrink-0 rounded-full px-4 py-2 text-sm font-bold ${selected===key?'bg-emerald-950 text-white':'bg-white text-stone-700 ring-1 ring-stone-200 hover:ring-emerald-700'}">${label}</button>`}).join('');$('filters').querySelectorAll('button').forEach(b=>b.onclick=()=>{selected=b.dataset.category;renderFilters();renderCalendar();renderEvents()});}
     function makeIcs(event){
@@ -168,7 +178,11 @@
     }
     function openModal(event){if(!event)return;activeModalEvent=event;renderModal(event);$('event-dialog').showModal()}
     $('lang-toggle').addEventListener('click',()=>setLanguage(lang==='it'?'en':'it'));
-    $('show-all').addEventListener('click',()=>{selectedDate=null;selected='all';renderCalendar();renderFilters();renderEvents()});
+    function shiftMonth(amount){const [year,month]=selectedMonth.split('-').map(Number);selectedMonth=new Date(Date.UTC(year,month-1+amount,1)).toISOString().slice(0,7);selectedDate=null;renderCalendar();renderEvents()}
+    $('month-prev').addEventListener('click',()=>shiftMonth(-1));
+    $('month-next').addEventListener('click',()=>shiftMonth(1));
+    $('month-today').addEventListener('click',()=>{selectedMonth=todayKey().slice(0,7);selectedDate=null;renderCalendar();renderEvents()});
+    $('show-all').addEventListener('click',()=>{selectedDate=null;renderCalendar();renderEvents()});
     $('modal-close').addEventListener('click',()=>$('event-dialog').close());
     $('event-dialog').addEventListener('close',()=>{activeModalEvent=null});
     $('event-dialog').addEventListener('click',ev=>{if(ev.target===$('event-dialog'))$('event-dialog').close()});
@@ -177,7 +191,7 @@
       const d=await fetch(cfg.data.eventsUrl||'./events.json');if(d.ok){const data=await d.json();events=Array.isArray(data)?data:(data.events||[])}
       $('map-link').href=cfg.venue.mapUrl;$('footer-map').href=cfg.venue.mapUrl;document.querySelector('meta[name="description"]').content=cfg.venue.description.it;document.querySelector('link[rel="canonical"]').href=cfg.venue.canonicalUrl+'/';document.title=`Eventi al ${cfg.venue.name} | Basket, Volley e Concerti`;
       const venueLd={"@context":"https://schema.org","@type":"StadiumOrArena","name":cfg.venue.name,"alternateName":cfg.venue.alternateName,"description":cfg.venue.description.it,"url":cfg.venue.canonicalUrl,"address":{"@type":"PostalAddress","streetAddress":cfg.venue.address,"addressLocality":cfg.venue.city,"addressRegion":cfg.venue.region,"postalCode":cfg.venue.postalCode,"addressCountry":cfg.venue.country},"geo":{"@type":"GeoCoordinates","latitude":cfg.venue.latitude,"longitude":cfg.venue.longitude}};
-      const schema=document.createElement('script');schema.type='application/ld+json';schema.textContent=JSON.stringify(venueLd);document.head.append(schema);setLanguage('it');
+      const schema=document.createElement('script');schema.type='application/ld+json';schema.textContent=JSON.stringify(venueLd);document.head.append(schema);selectedMonth=todayKey().slice(0,7);setLanguage('it');
     } catch(err){console.error(err);$('empty-state').classList.remove('hidden');$('empty-state').textContent='Impossibile caricare il calendario. Riprova più tardi.';}
   </script>
 </body>
